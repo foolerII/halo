@@ -21,8 +21,10 @@ import run.halo.app.exception.AuthenticationException;
 import run.halo.app.exception.ForbiddenException;
 import run.halo.app.model.properties.ApiProperties;
 import run.halo.app.model.properties.CommentProperties;
+import run.halo.app.model.properties.PropertyEnum;
 import run.halo.app.security.handler.DefaultAuthenticationFailureHandler;
 import run.halo.app.security.service.OneTimeTokenService;
+import run.halo.app.service.OptionProvideService;
 import run.halo.app.service.OptionService;
 
 /**
@@ -72,6 +74,7 @@ public class ApiAuthenticationFilter extends AbstractAuthenticationFilter {
         }
 
         // Get api_enable from option
+        /** {@link OptionProvideService#getByPropertyOrDefault(PropertyEnum, Class, Object)}*/
         Boolean apiEnabled =
             optionService.getByPropertyOrDefault(ApiProperties.API_ENABLED, Boolean.class, false);
 
