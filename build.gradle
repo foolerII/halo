@@ -126,8 +126,8 @@ dependencies {
     implementation "io.github.java-diff-utils:java-diff-utils:$diffUtilsVersion"
 
     implementation "org.iq80.leveldb:leveldb:$levelDbVersion"
-    runtimeOnly "com.h2database:h2:$h2Version"
-    runtimeOnly "mysql:mysql-connector-java"
+    implementation "com.h2database:h2:$h2Version"
+    implementation "mysql:mysql-connector-java"
 
     compileOnly "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"
@@ -160,7 +160,9 @@ task clearJar(type: Delete) {
 // 将依赖包复制到lib目录
 task copyJar(type: Copy, dependsOn: clearJar) {
     from configurations.compileClasspath
-    into "$buildDir\\libs\\lib"
+    from configurations.runtimeClasspath
+
+    into "$buildDir/libs/lib"
 }
 
 bootJar {
@@ -170,16 +172,17 @@ bootJar {
     // lib目录的清除和复制任务
     dependsOn clearJar
     dependsOn copyJar
-
+    
     // 指定依赖包的路径
     manifest {
-        attributes "Implementation-Title": "Halo Application",
-                "Implementation-Version": archiveVersion,
+        attributes "Manifest-Version": 1.0,
 //    }
 //    manifest {
 //        attributes
-                "Manifest-Version": 1.0,
                 'Main-Class': 'org.springframework.boot.loader.PropertiesLauncher',
-                'Class-Path': configurations.compileClasspath.files.collect { "lib/$it.name" }.join(' ')
+                'Class-Path': //configurations.compileClasspath.files.collect { "lib/$it.name" }.join(' ') + ' ' +
+                        new File("$buildDir/libs/lib").listFiles().collect { "lib/$it.name" }.join(' '),
+                "Implementation-Title": "Halo Application",
+                "Implementation-Version": archiveVersion
     }
 }

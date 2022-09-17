@@ -2,8 +2,8 @@
 
 current="$(dirname "$0")"
 cd "$current"
-loader_path=./conf/
-jar=./halo-1.5.4.jar
+loader_path=../main/resources/
+jar=../../build/libs/halo-1.5.4.jar
 java \
     -Dloader.path="$loader_path" \
     -jar "$jar" \
