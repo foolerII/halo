@@ -7,3 +7,7 @@ rsync -av --delete \
   start.sh \
   ${HOST}:~/halo
 
+rsync -av --delete  config/halo.ini ${HOST}:~/etc/supervisor/conf.d
+
+ssh ${HOST} "sh ~/bin/supervisorctl.sh update"
+ssh ${HOST} "sh ~/bin/supervisorctl.sh restart halo"
