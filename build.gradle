@@ -167,12 +167,14 @@ task copyJar(type: Copy, dependsOn: clearJar) {
 
 bootJar {
     // 这里可以排除 halo-jar 中的文件
-    excludes = ["*.jar", "application*.yaml", "*.properties", "logback.xml"]
+    excludes = ["*.jar", "application*.yaml", "*.properties", "logback.xml",
+                "admin/**"
+    ]
 
     // lib目录的清除和复制任务
     dependsOn clearJar
     dependsOn copyJar
-    
+
     // 指定依赖包的路径
     manifest {
         attributes "Manifest-Version": 1.0,
