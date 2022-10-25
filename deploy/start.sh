@@ -2,7 +2,7 @@
 
 current="$(dirname "$0")"
 cd "$current"
-loader_path=./conf/,./web/
+loader_path=./conf/,./web/*
 jar=./halo-1.5.4.jar
 java \
     -Dloader.path="$loader_path" \
